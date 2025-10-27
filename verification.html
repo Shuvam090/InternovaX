@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Internovax Website</title>
+    
+    <link rel="icon" type="image/x-icon" href="/Images/WhatsApp_Image_2025-08-22_at_10.00.21_AM-removebg-preview.png">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/about.css">
+    <link rel="stylesheet" href="css/verfication.css">
+    
+    <!-- ICONSOUT CNN -->
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.2.0/css/line.css">
+     <!-- GOOGLE FONT -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+
+<!--Swiper JS-->
+ <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+</head>
+<body>
+    <nav>
+        <div class="container nav_container">
+            <a href="index.html" ><span ><img src="Images/Picsart_25-08-27_23-30-19-609.png" alt="LOGO" width="149px" id="logo"></span></a>
+            <ul class="nav_menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="courses.html">Courses</a></li>
+                <li><a href="verification.html">Verification</a></li>
+                <li><a href="contact.html">Contact</a></li>
+
+            </ul>
+            <button id="open_menu_btn"><i class="uil uil-bars"></i></button>
+            <button id="close_menu_btn"><i class="uil uil-multiply"></i></button>
+        </div>
+    </nav>
+
+
+
+
+
+   <!-------------------------------------END OF NAVBAR------------------------------>
+
+    <section>
+    <div class="container verify_container ">
+    <h2>Certificate Verification</h2>
+    <input id="certId" placeholder="Enter Certificate ID" />
+    <button id="checkBtn" class="btn btn-primary">Verify</button>
+    <div id="result" class="result"></div>
+  </div>
+     </section>
+
+
+   <!-------------------------------------START OF FOOTER------------------------------>
+    <footer class="footer">
+    <div class="container footer_container">
+        <div class="footer_1">
+             <a href="index.html" ><span ><img src="Images/Picsart_25-08-27_23-30-19-609.png" alt="LOGO" width="149px" id="logo_foot"></span></a>
+             <p>Innovating Beyond Limits</p>
+        </div>
+        <div class="footer_2">
+            <h4>Permalink</h4>
+            <ul class="permalink">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="courses.html">Courses</a></li>
+                <li><a href="verification.html">Verification</a></li>
+                <li><a href="contact.html">Contact</a></li>
+
+            </ul>
+        </div>
+
+        <div class="footer_3">
+            <h4>Primacy</h4>
+            <ul class="privacy">
+                <li><a href="InterNovaX_Privacy_Policy.pdf">Privacy Policy</a></li>
+                <li><a href="Internovax_Terms_Conditions.pdf">Terms & Conditions</a></li>
+                <li><a href="Internovax_Refund_Policy.pdf">Refund Policy</a></li>
+            </ul>
+        </div>
+        <div class="footer_4">
+            <h4>Contact US</h4>
+            <div>
+                <p>+91 9692178872</p>
+                <p>internovax09@gmail.com</p>
+            </div>
+           <ul class="footer_socials">
+
+            <li>
+            <a href="#"><i class="uil uil-facebook-f"></i></a>
+            </li>
+            <li>
+            <a href="https://www.instagram.com/internovax09/"><i class="uil uil-instagram-alt"></i></a>
+            <li>
+            </li>
+            <a href="https://x.com/internovax09"><i class="uil uil-twitter"></i></a>
+            </li>            
+            <li>
+            <a href="https://www.linkedin.com/company/internovax/about/?viewAsMember=true"><i class="uil uil-linkedin-alt"></i></a>
+            </li>
+            </ul>
+        </div>
+        </div>
+        <div class="footer_copyright">
+        <small>&copy;  2025   All Reserved By InterNovaX</small>
+    </div>
+</footer>
+<script src="main.js"></script>
+<script>
+    const CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTcXRhtUERIw3F5NmDfSdbMG41Bq1QYlvDyBCnYPI5QGbuQjQL75Fcj6Dq-vySzUj7KI46yqmJ74hSS/pub?gid=0&single=true&output=csv";
+
+    let CERTS = [];
+
+    async function loadSheet() {
+      if (CERTS.length) return CERTS;
+      const resp = await fetch(CSV_URL);
+      const text = await resp.text();
+
+      // Split lines
+      const rows = text.trim().split("\n").map(r => r.split(",").map(c => c.trim()));
+      // rows[0] = header, assume format: ID,Name,Course,Duration
+      CERTS = rows.slice(1).map(r => ({
+        id: r[0].toUpperCase(),
+        name: r[1],
+        course: r[2],
+        duration: r[3]
+      }));
+      return CERTS;
+    }
+
+    async function verify() {
+      const result = document.getElementById("result");
+      result.innerHTML = "";
+      const input = document.getElementById("certId").value.trim().toUpperCase();
+      if (!input) {
+        result.innerHTML = `<div class="bad">⚠️ Please enter an ID</div>`;
+        return;
+      }
+
+      const data = await loadSheet();
+      const match = data.find(row => row.id === input);
+
+      if (match) {
+        result.innerHTML = `
+          <div class="ok">✅ Valid Certificate</div>
+          <div class="details">
+            <div><strong>ID:</strong> ${match.id}</div>
+            <div><strong>Name:</strong> ${match.name}</div>
+            <div><strong>Course:</strong> ${match.course}</div>
+            <div><strong>Duration:</strong> ${match.duration}</div>
+          </div>
+        `;
+      } else {
+        result.innerHTML = `<div class="bad">❌ Invalid Certificate ID</div>`;
+      }
+    }
+
+    document.getElementById("checkBtn").addEventListener("click", verify);
+    document.getElementById("certId").addEventListener("keydown", e => {
+      if (e.key === "Enter") verify();
+    });
+  </script>
+</body>
+</html>

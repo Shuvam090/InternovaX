@@ -1,0 +1,51 @@
+.verify_container{
+    position: relative;
+    background: var(--color-bg3);
+     padding:24px;
+      border-radius:12px;
+       box-shadow:0 4px 16px rgba(0,0,0,.15);
+     width:650px;
+     height: 70vh;
+    text-align:center;
+    transition: var(--transition);
+}
+
+input{
+    width: 100%;
+    padding: 1rem;
+    background: var(--color-bg);
+    color: var(--color-white);
+    margin-bottom: 1rem;
+}
+.verify_container h2{
+    margin-top: 1.5rem;
+}
+
+
+@media screen and (max-width: 600px) {
+
+
+    .verify_container{
+    position: relative;
+    background: var(--color-bg3);
+     padding:24px;
+      border-radius:12px;
+       box-shadow:0 4px 16px rgba(0,0,0,.15);
+     width:60vw;
+     height: 85vh;
+    text-align:center;
+    transition: var(--transition);
+}
+
+input{
+    width: 100%;
+    padding: 1rem;
+    background: var(--color-bg);
+    color: var(--color-white);
+    margin-bottom: 1rem;
+}
+.verify_container h2{
+    margin-top: 1.5rem;
+}
+
+}
